@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
 
 
-import { employeeUpdate } from "../redux/employee/actions"
+import { employeeUpdate, employeeCreate } from "../redux/employee/actions"
 
 import Spacer from "../common/spacer";
 
@@ -56,7 +56,14 @@ const EmployeeCreateScreen = (props) => {
       </Spacer>
 
       <Spacer>
-        <Button icon="plus-box-outline" mode="contained">
+        <Button
+          icon="plus-box-outline"
+          mode="contained"
+          onPress={() => {
+            props.employeeCreate({ name, phone, shift: shift || "Monday" }),
+            props.navigation.pop();
+          }}
+        >
           Create
         </Button>
       </Spacer>
@@ -86,6 +93,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     employeeUpdate: ({ prop, value }) =>
       dispatch(employeeUpdate({ prop, value })),
+    employeeCreate: ({ name, phone, shift }) =>
+      dispatch(employeeCreate({ name, phone, shift })),
   };
 }
 

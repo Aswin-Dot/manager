@@ -9,6 +9,7 @@ import { AntDesign } from "@expo/vector-icons";
 import logoutScreen from "../screens/logoutScreen";
 import EmployeeCreateScreen from "../screens/employeeCreateScreen";
 import EmployeeListScreen from "../screens/employeeListScreen";
+import EmployeeEditScreen from "../screens/employeeEditScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ const EmployeeNavigation = ({ navigation }) => {
         name="EmployeeList"
         component={EmployeeListScreen}
         options={{
-          title: "Employee",
+          title: "Employees List",
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate("EmployeeCreate")}
@@ -39,6 +40,13 @@ const EmployeeNavigation = ({ navigation }) => {
         component={EmployeeCreateScreen}
         options={{
           title: "Employee Create",
+        }}
+      />
+      <Stack.Screen
+        name="EmployeeEdit"
+        component={EmployeeEditScreen}
+        options={{
+          title: "Employee Edit",
         }}
       />
     </Stack.Navigator>

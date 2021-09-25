@@ -15,9 +15,8 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-
-    firebaseInitialization();
     if (!firebase.apps.length) {
+      firebaseInitialization();
     } else {
       firebase.app(); // if already initialized, use that one
     }

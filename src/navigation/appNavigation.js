@@ -1,57 +1,11 @@
-import React from "react"
-import { TouchableOpacity } from 'react-native'
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 
 import logoutScreen from "../screens/logoutScreen";
-import EmployeeCreateScreen from "../screens/employeeCreateScreen";
-import EmployeeListScreen from "../screens/employeeListScreen";
-import EmployeeEditScreen from "../screens/employeeEditScreen";
-
-const Stack = createStackNavigator();
-
-const EmployeeNavigation = ({ navigation }) => {
-  return (
-    <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
-      <Stack.Screen
-        name="EmployeeList"
-        component={EmployeeListScreen}
-        options={{
-          title: "Employees List",
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("EmployeeCreate")}
-            >
-              <AntDesign
-                name="adduser"
-                size={24}
-                color="black"
-                style={{ marginHorizontal: 10 }}
-              />
-            </TouchableOpacity>
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="EmployeeCreate"
-        component={EmployeeCreateScreen}
-        options={{
-          title: "Employee Create",
-        }}
-      />
-      <Stack.Screen
-        name="EmployeeEdit"
-        component={EmployeeEditScreen}
-        options={{
-          title: "Employee Edit",
-        }}
-      />
-    </Stack.Navigator>
-  );
-};
+import EmployeeNavigation from "./stack/employeeNavigation"
 
 const Tab = createBottomTabNavigator();
 

@@ -14,6 +14,7 @@ import {
 import { employeesFetch } from "../redux/employeeList/actions";
 
 const EmployeeListScreen = (props) => {
+  // console.log(props)
   const { employees } = props;
 
   useEffect(() => {
@@ -78,6 +79,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     employeesFetch: () => dispatch(employeesFetch()),
+    employeeClearForm: () => dispatch(employeeClearForm())
   };
 }
 

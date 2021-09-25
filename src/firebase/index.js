@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 
-export default firebase = () => {
+const firebaseInitialization = () => {
     const firebaseConfig = {
       apiKey: "AIzaSyDdZ2hSTvb-FkPrIIu6Qit4dpM25KEZ6tA",
       authDomain: "manager-3ba61.firebaseapp.com",
@@ -13,3 +13,5 @@ export default firebase = () => {
     
     firebase.initializeApp(firebaseConfig);
 }
+
+export default firebaseInitialization;

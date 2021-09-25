@@ -44,3 +44,18 @@ export const employeeEdit = ({ name, phone, shift, uid }) => async(dispatch) => 
     alert(e.message);
   }
 }
+
+export const employeeDelete = ({ uid }) => async(dispatch) => {
+  const { currentUser } = firebase.auth();
+
+  try {
+    await firebase
+      .database()
+      .ref(`/users/${currentUser.uid}/employees/${uid}`)
+      .remove()
+
+    dispatch({ type: employee_reset });
+  } catch (e) {
+    alert(e.message);
+  }
+}

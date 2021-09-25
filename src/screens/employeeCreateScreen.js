@@ -3,16 +3,12 @@ import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 import { connect } from "react-redux";
 
-import { employeeCreate, employeeClearForm } from "../redux/employee/actions"
+import { employeeCreate } from "../redux/employee/actions";
 import EmployeeForm from "../components/employeeForm"; 
 import Spacer from "../common/spacer";
 
 const EmployeeCreateScreen = (props) => {
   const { name, phone, shift } = props;
-
-  useEffect(() => {
-    props.employeeClearForm()
-  })
 
   return (
     <View style={styles.container}>
@@ -54,8 +50,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     employeeCreate: ({ name, phone, shift }) =>
-      dispatch(employeeCreate({ name, phone, shift })),
-    employeeClearForm: () => dispatch(employeeClearForm()),
+      dispatch(employeeCreate({ name, phone, shift }))
   };
 }
 

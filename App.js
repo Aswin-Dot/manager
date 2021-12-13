@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { LogBox } from "react-native";
+import Constants from "expo-constants";
+import * as Notifications from "expo-notifications";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from "react-redux";
@@ -15,6 +18,8 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
+    console.log("hi")
     if (!firebase.apps.length) {
       firebaseInitialization();
     } else {
@@ -27,6 +32,7 @@ export default function App() {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           setIsLoggedIn(true);
+          registerForPushNotificationsAsync(user);
         } else {
           setIsLoggedIn(false);
         }
@@ -38,6 +44,46 @@ export default function App() {
       checkIsLoggedIn();
     }, 3000);
   }, [isLoggedIn]);
+
+  const registerForPushNotificationsAsync = async (user) => {
+    if (Constants.isDevice) {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      const token = (await Notifications.getExpoPushTokenAsync()).data;
+
+      // saving token to the database
+        try{
+          await firebase
+            .database()
+            .ref('users')
+            .child(`${user.uid}`)
+            .update({ ExponentPushToken: token });
+        } catch (e) {
+          alert(e.message)
+        }
+
+    } else {
+      alert("Must use physical device for Push Notifications");
+    }
+
+    if (Platform.OS === "android") {
+      Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+  };
 
   return (
     <NavigationContainer>
